@@ -2,8 +2,82 @@
 
 import Navbar from "./components/Navbar";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { brandedSuccess, brandedError } from "./components/BrandedToast";
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState<any>({});
+  const [success, setSuccess] = useState(false);
+
+  const handleChange = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+    setErrors((prev: any) => ({
+      ...prev,
+      [e.target.name]: false,
+    }));
+  };
+
+  const validate = () => {
+    const newErrors: any = {};
+
+    if (!form.name.trim()) newErrors.name = true;
+    if (!form.email.trim()) newErrors.email = true;
+    if (!form.subject.trim()) newErrors.subject = true;
+    if (!form.message.trim()) newErrors.message = true;
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    if (!validate()) {
+      brandedError("Please fill all fields ❌");
+      return;
+    }
+
+    setLoading(true);
+    setSuccess(false);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        brandedSuccess("We received your message. Our team will contact you soon.");
+        setForm({ name: "", email: "", subject: "", message: "" });
+        setSuccess(true);
+
+        setTimeout(() => setSuccess(false), 2500);
+      } else {
+        brandedError("Message failed. Please try again later.");
+      }
+    } catch (err) {
+      brandedError("Message failed. Please try again later.");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <main className="bg-[#f3f4f6] text-gray-900">
 
@@ -82,8 +156,7 @@ export default function Home() {
 
         <div className="grid md:grid-cols-3 gap-8 mt-14 max-w-6xl mx-auto">
 
-          {[
-            { icon: "📎", title: "Office Stationery Supply", desc: "Daily office essentials ensuring smooth workflow." },
+          {[{ icon: "📎", title: "Office Stationery Supply", desc: "Daily office essentials ensuring smooth workflow." },
             { icon: "🏷️", title: "Corporate Branding", desc: "Customized business stationery solutions." },
             { icon: "📦", title: "Bulk Supply Management", desc: "Efficient procurement for companies." },
             { icon: "🖨️", title: "Printing Services", desc: "High-quality professional printing." },
@@ -91,11 +164,9 @@ export default function Home() {
             { icon: "🏢", title: "Office Setup", desc: "Complete startup office setup." }
           ].map((item) => (
             <div key={item.title} className="bg-white p-8 rounded-2xl border hover:border-[#b08d3c]/40 transition">
-
               <div className="text-3xl mb-3">{item.icon}</div>
               <h3 className="font-semibold">{item.title}</h3>
               <p className="text-sm text-gray-600 mt-2">{item.desc}</p>
-
             </div>
           ))}
 
@@ -104,7 +175,6 @@ export default function Home() {
 
       {/* PRODUCTS */}
       <section id="PRODUCTS" className="py-24 px-6 bg-gray-50">
-
         <h2 className="text-3xl font-bold text-center text-[#b08d3c]">
           Our Products
         </h2>
@@ -121,7 +191,6 @@ export default function Home() {
 
               <div className="absolute inset-0 group-hover:bg-black/20 transition" />
               <div className="absolute top-2 right-2 w-2 h-2 bg-[#b08d3c] rounded-full" />
-
             </div>
           ))}
 
@@ -130,14 +199,11 @@ export default function Home() {
 
       {/* LOCATION */}
       <section id="LOCATION" className="py-24 px-6 bg-white">
-
         <h2 className="text-3xl font-bold text-center text-[#b08d3c]">
           Our Location
         </h2>
 
         <div className="max-w-5xl mx-auto mt-14">
-
-          {/* MAP ONLY */}
           <div className="relative rounded-2xl overflow-hidden border shadow-lg h-[450px]">
 
             <iframe
@@ -146,9 +212,7 @@ export default function Home() {
               loading="lazy"
             />
 
-            {/* Overlay button */}
             <div className="absolute inset-0 flex items-center justify-center">
-
               <a
                 href="https://maps.app.goo.gl/vaANFpBxKrqDUVmd9"
                 target="_blank"
@@ -156,105 +220,122 @@ export default function Home() {
               >
                 Open in Google Maps
               </a>
-
             </div>
 
           </div>
-
         </div>
       </section>
 
       {/* CONTACT */}
       <section id="CONTACT" className="relative py-24 overflow-hidden">
 
-        {/* BACKGROUND */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#f3f4f6] via-[#e5e7eb] to-[#f3f4f6]" />
         <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_top_right,#c8a24a,transparent_55%)]" />
 
         <div className="relative max-w-7xl mx-auto px-6">
 
-          {/* HEADER */}
           <div className="text-center mb-14">
-
             <h2 className="text-3xl font-bold text-[#b08d3c]">
-              Contact Us
+              Get in Touch
             </h2>
-
             <p className="mt-4 text-gray-600">
-              Let’s build something professional together
+              Let’s discuss something professional together
             </p>
-
           </div>
 
-          {/* GRID */}
           <div className="grid md:grid-cols-2 gap-12 items-center">
 
-            {/* LEFT INFO */}
             <div>
-
               <h3 className="text-xl font-semibold text-gray-900">
                 TANVEER STATIONERY TRADING CO. L.L.C
               </h3>
 
-              <p className="text-gray-600 mt-3">
-                Professional stationery & office supply solutions in UAE.
-              </p>
-
               <div className="mt-8 space-y-4 text-gray-600">
-
-                <p>📍 Dubai, United Arab Emirates</p>
-                <p>📞 +971 XX XXX XXXX</p>
-                <p>✉️ info@tanveerstationery.com</p>
-                <p>🕒 Mon - Sat | 9:00 AM - 6:00 PM</p>
-
+                <p>📍 P.O BOX:22662, Dubai, United Arab Emirates</p>
+                <p>📞 +971 50 707 5935</p>
+                <p>📞 +971 56 160 0653</p>
+                <p>✉️ tanveerstationerytradingllc@gmail.com</p>
+                <p>🕒 Mon - Sat | 8:00 AM - 10:00 PM</p>
               </div>
-
-              <div className="mt-8 h-[2px] w-20 bg-[#b08d3c]" />
-
             </div>
 
-            {/* RIGHT FORM */}
             <div className="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm">
 
-              <form className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-5">
 
                 <input
-                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
                   placeholder="Your Name"
-                  className="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-[#b08d3c] outline-none"
+                  className={`w-full p-3 rounded-xl border ${
+                    errors.name ? "border-red-500" : "border-gray-200"
+                  }`}
                 />
 
                 <input
-                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
                   placeholder="Your Email"
-                  className="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-[#b08d3c] outline-none"
+                  className={`w-full p-3 rounded-xl border ${
+                    errors.email ? "border-red-500" : "border-gray-200"
+                  }`}
                 />
 
                 <input
-                  type="text"
+                  name="subject"
+                  value={form.subject}
+                  onChange={handleChange}
                   placeholder="Subject"
-                  className="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-[#b08d3c] outline-none"
+                  className={`w-full p-3 rounded-xl border ${
+                    errors.subject ? "border-red-500" : "border-gray-200"
+                  }`}
                 />
 
                 <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
                   rows={5}
                   placeholder="Your Message"
-                  className="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-[#b08d3c] outline-none resize-none"
+                  className={`w-full p-3 rounded-xl border resize-none ${
+                    errors.message ? "border-red-500" : "border-gray-200"
+                  }`}
                 />
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-[#b08d3c] text-white font-semibold rounded-xl hover:bg-black transition"
+                  disabled={loading}
+                  className="w-full py-3 bg-[#b08d3c] text-white rounded-xl flex items-center justify-center gap-2"
                 >
-                  Send Message
+                  {loading ? (
+                    <>
+                      <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
                 </button>
 
               </form>
 
+              {success && (
+                <div className="mt-5 flex justify-center">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl"
+                  >
+                    ✓
+                  </motion.div>
+                </div>
+              )}
+
             </div>
 
           </div>
-
         </div>
       </section>
 
