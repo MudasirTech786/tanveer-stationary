@@ -35,7 +35,7 @@ export async function POST(req: any) {
     await transporter.sendMail({
       from: `"${name} via Tanveer Stationery" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
-      replyTo: `${name} <${email}>`,
+      replyTo: email,
       subject: `📩 ${name} (${email}) - ${subject}`,
 
       html: `
