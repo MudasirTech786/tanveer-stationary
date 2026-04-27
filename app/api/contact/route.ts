@@ -48,12 +48,12 @@ export async function POST(req: any) {
             <img 
               src="https://tanveer-stationary-gvc9.vercel.app/hero-logo.png" 
               alt="Tanveer Stationery" 
-              style="max-height:60px;margin-bottom:10px;"
+              style="max-height:100px;margin-bottom:10px;"
             />
-            <h2 style="margin:5px 0 0 0;color:#222;font-size:20px;">
+            <h2 style="margin:5px 0 0 0;color:#b08d3c;font-size:25px;">
               Tanveer Stationery Trading Co. L.L.C
             </h2>
-            <p style="margin:4px 0 0 0;font-size:12px;color:#888;">
+            <p style="margin:4px 0 0 0;font-size:16px;color:#888;">
               New Contact Form Submission
             </p>
           </div>
