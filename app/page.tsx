@@ -129,7 +129,7 @@ export default function Home() {
       </section>
 
       {/* LOCATION */}
-      <section id="location" className="py-24 px-6 bg-white">
+      <section id="LOCATION" className="py-24 px-6 bg-white">
 
         <h2 className="text-3xl font-bold text-center text-[#b08d3c]">
           Our Location
@@ -165,7 +165,7 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="relative py-24 overflow-hidden">
+      <section id="CONTACT" className="relative py-24 overflow-hidden">
 
         {/* BACKGROUND */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#f3f4f6] via-[#e5e7eb] to-[#f3f4f6]" />
