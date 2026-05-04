@@ -116,7 +116,14 @@ export default function Home() {
               environments.
             </p>
 
-            <button className="mt-7 md:mt-8 px-7 md:px-8 py-2.5 md:py-3 border border-[#b08d3c] text-[#b08d3c] hover:bg-[#b08d3c] hover:text-white transition">
+            <button
+              onClick={() => {
+                document.getElementById("CONTACT")?.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
+              className="mt-7 md:mt-8 px-7 md:px-8 py-2.5 md:py-3 border border-[#b08d3c] text-[#b08d3c] hover:bg-[#b08d3c] hover:text-white transition"
+            >
               Discover More
             </button>
           </motion.div>
@@ -157,11 +164,11 @@ export default function Home() {
         <div className="grid md:grid-cols-3 gap-8 mt-14 max-w-6xl mx-auto">
 
           {[{ icon: "📎", title: "Office Stationery Supply", desc: "Daily office essentials ensuring smooth workflow." },
-            { icon: "🏷️", title: "Corporate Branding", desc: "Customized business stationery solutions." },
-            { icon: "📦", title: "Bulk Supply Management", desc: "Efficient procurement for companies." },
-            { icon: "🖨️", title: "Printing Services", desc: "High-quality professional printing." },
-            { icon: "🎓", title: "School Supplies", desc: "Educational stationery solutions." },
-            { icon: "🏢", title: "Office Setup", desc: "Complete startup office setup." }
+          { icon: "🏷️", title: "Corporate Branding", desc: "Customized business stationery solutions." },
+          { icon: "📦", title: "Bulk Supply Management", desc: "Efficient procurement for companies." },
+          { icon: "🖨️", title: "Printing Services", desc: "High-quality professional printing." },
+          { icon: "🎓", title: "School Supplies", desc: "Educational stationery solutions." },
+          { icon: "🏢", title: "Office Setup", desc: "Complete startup office setup." }
           ].map((item) => (
             <div key={item.title} className="bg-white p-8 rounded-2xl border hover:border-[#b08d3c]/40 transition">
               <div className="text-3xl mb-3">{item.icon}</div>
@@ -207,14 +214,14 @@ export default function Home() {
           <div className="relative rounded-2xl overflow-hidden border shadow-lg h-[450px]">
 
             <iframe
-              src="https://www.google.com/maps?q=Dubai&output=embed"
+              src="https://www.google.com/maps?q=25.262975692749023,55.33515167236328&z=17&output=embed"
               className="absolute inset-0 w-full h-full"
               loading="lazy"
             />
 
             <div className="absolute inset-0 flex items-center justify-center">
               <a
-                href="https://maps.app.goo.gl/vaANFpBxKrqDUVmd9"
+                href="https://maps.google.com/?q=25.262975692749023,55.33515167236328"
                 target="_blank"
                 className="px-6 py-3 bg-[#b08d3c] text-white rounded-xl hover:bg-black transition"
               >
@@ -268,9 +275,8 @@ export default function Home() {
                   value={form.name}
                   onChange={handleChange}
                   placeholder="Your Name"
-                  className={`w-full p-3 rounded-xl border ${
-                    errors.name ? "border-red-500" : "border-gray-200"
-                  }`}
+                  className={`w-full p-3 rounded-xl border ${errors.name ? "border-red-500" : "border-gray-200"
+                    }`}
                 />
 
                 <input
@@ -278,9 +284,8 @@ export default function Home() {
                   value={form.email}
                   onChange={handleChange}
                   placeholder="Your Email"
-                  className={`w-full p-3 rounded-xl border ${
-                    errors.email ? "border-red-500" : "border-gray-200"
-                  }`}
+                  className={`w-full p-3 rounded-xl border ${errors.email ? "border-red-500" : "border-gray-200"
+                    }`}
                 />
 
                 <input
@@ -288,9 +293,8 @@ export default function Home() {
                   value={form.subject}
                   onChange={handleChange}
                   placeholder="Subject"
-                  className={`w-full p-3 rounded-xl border ${
-                    errors.subject ? "border-red-500" : "border-gray-200"
-                  }`}
+                  className={`w-full p-3 rounded-xl border ${errors.subject ? "border-red-500" : "border-gray-200"
+                    }`}
                 />
 
                 <textarea
@@ -299,9 +303,8 @@ export default function Home() {
                   onChange={handleChange}
                   rows={5}
                   placeholder="Your Message"
-                  className={`w-full p-3 rounded-xl border resize-none ${
-                    errors.message ? "border-red-500" : "border-gray-200"
-                  }`}
+                  className={`w-full p-3 rounded-xl border resize-none ${errors.message ? "border-red-500" : "border-gray-200"
+                    }`}
                 />
 
                 <button
